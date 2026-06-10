@@ -208,7 +208,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 llm = ChatGroq(
-    model="llama3-8b-8192",
+    model="llama-3.1-8b-instant",
     temperature=0.7,
     max_tokens=100
 )
@@ -246,11 +246,13 @@ print(response.content)
 ## Expected Output
 
 ```text
-[SYSTEM] Model Initialized.
-
+[SYSTEM] model initialized successfully.
+---Row Response Object---
 <class 'langchain_core.messages.ai.AIMessage'>
+Recursion is a pretty cool concept in computer science and mathematics. Imagine you have a big box of toys, and inside that box, there's another smaller box. And inside that smaller box, there's an even smaller box, and so on.
 
-Recursion is like looking into a mirror that reflects another mirror until it reaches a stopping point.
+Now, let's say you have a task to put all the toys away in their boxes. If you just started with the big box, you'd have to put all the toys in the smaller box, and then all the toys in the even smaller
+
 ```
 
 ### Learning Outcomes
