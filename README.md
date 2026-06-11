@@ -13,9 +13,6 @@ The goal is to build a strong foundation in developing AI-powered applications u
 * ✅ Assignment 1: LangChain Basics
 * ✅ Assignment 2: Development Environment for LangChain
 * ✅ Assignment 3: Your First AI Connection – Models, Parameters, and Direct Invocation
-
-### Upcoming Assignments
-
 * ✅ Assignment 4: The Chain Architecture Blueprint – Building Intelligent AI Pipelines with LCEL
 * ✅ Assignment 5: Prompt Engineering Mastery – Controlling AI Behavior with Roles, Examples, and Intent
 * ✅ Assignment 6: Applied AI in Action – Building Real-World Language Transformation Tools with LangChain
@@ -327,7 +324,201 @@ LCEL chain executes everything in one pipeline
 - Output parsing using StrOutputParser
 - LCEL pipe operator (|) for chaining components
 - End-to-end AI pipeline execution
----
+```
+
+# Assignment 5: Advanced Prompt Engineering
+
+## Objective
+
+Learn advanced prompt engineering techniques in LangChain to improve response quality, consistency, and control over LLM outputs. This assignment covers Role-Based Prompting and Few-Shot Prompting.
+
+## Project File
+
+advanced_prompt_engineering.py
+
+## Full Implementation
+
+```python
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.prompts import (
+    ChatPromptTemplate,
+    FewShotChatMessagePromptTemplate
+)
+from langchain_core.output_parsers import StrOutputParser
+
+load_dotenv()
+
+# Initialize the model
+llm = ChatGroq(
+    model="llama-3.1-8b-instant",
+    temperature=0.7,
+    max_tokens=100
+)
+
+print("Technique A: Role-Based Prompting")
+
+# Role-Based Prompting
+messages = [
+    SystemMessage(
+        content="You are a senior Python Architect. You only answer with code snippets. No explanations."
+    ),
+    HumanMessage(content="How do I reverse a list?")
+]
+
+response = llm.invoke(messages)
+print(response.content)
+
+print("\nTechnique B: Few-Shot Prompting")
+
+# Few-Shot Examples
+examples = [
+    {"input": "2+2", "output": "4"},
+    {"input": "2+3", "output": "5"},
+]
+
+# Example Template
+example_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("human", "{input}"),
+        ("ai", "{output}")
+    ]
+)
+
+# Few-Shot Prompt
+few_shot_prompt = FewShotChatMessagePromptTemplate(
+    example_prompt=example_prompt,
+    examples=examples,
+)
+
+# Final Prompt
+final_prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", "You are a math wizard."),
+        few_shot_prompt,
+        ("human", "{input}")
+    ]
+)
+
+# Output Parser
+parser = StrOutputParser()
+
+# Chain
+chain = final_prompt | llm | parser
+
+response = chain.invoke({"input": "What is 10 + 10?"})
+
+print(response)
+```
+
+## Technique A: Role-Based Prompting
+
+Role-Based Prompting assigns a specific persona or role to the AI before providing the user's question.
+
+Example:
+
+```python
+SystemMessage(
+    content="You are a senior Python Architect. You only answer with code snippets. No explanations."
+)
+```
+
+The System Message controls the behavior of the model, while the Human Message contains the user's actual request.
+
+Because the AI is instructed to behave like a Python Architect, it responds with code only and avoids explanations.
+
+### Expected Output
+
+```python
+my_list = [1, 2, 3, 4]
+reversed_list = my_list[::-1]
+print(reversed_list)
+```
+
+## Technique B: Few-Shot Prompting
+
+Few-Shot Prompting improves consistency by showing the model examples before asking the real question.
+
+### Examples Provided
+
+```text
+2 + 2 = 4
+2 + 3 = 5
+```
+
+These examples teach the model the expected pattern.
+
+### Prompt Structure
+
+```text
+System: You are a math wizard.
+
+Human: 2+2
+AI: 4
+
+Human: 2+3
+AI: 5
+
+Human: What is 10 + 10?
+```
+
+The model uses the examples to infer the correct answer.
+
+### Expected Output
+
+```text
+20
+```
+
+## How It Works
+
+1. The Groq LLM is initialized.
+2. Role-Based Prompting assigns a persona to control model behavior.
+3. Few-Shot Prompting provides examples to guide responses.
+4. ChatPromptTemplate creates structured prompts.
+5. FewShotChatMessagePromptTemplate inserts example conversations.
+6. StrOutputParser converts the model response into plain text.
+7. LCEL connects all components using the pipe (`|`) operator.
+8. The chain processes input and returns the final output.
+
+## Data Flow
+
+```text
+Input
+  ↓
+Prompt Template
+  ↓
+Few-Shot Examples
+  ↓
+LLM
+  ↓
+Output Parser
+  ↓
+Final Response
+```
+
+## Key Concepts Learned
+
+- Role-Based Prompting
+- System Messages and Human Messages
+- Few-Shot Prompting
+- ChatPromptTemplate
+- FewShotChatMessagePromptTemplate
+- StrOutputParser
+- LCEL Chain Architecture
+- Prompt Engineering Best Practices
+
+## Learning Outcomes
+
+- Controlled AI behavior using personas
+- Improved response consistency using examples
+- Built dynamic prompts with templates
+- Created reusable AI workflows
+- Combined prompts, models, and parsers using LCEL
+- Understood how prompt engineering improves output quality
+
+```
 # Repository Structure
 
 ```text
