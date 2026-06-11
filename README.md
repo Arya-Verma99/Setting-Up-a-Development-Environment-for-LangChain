@@ -269,42 +269,6 @@ Learn how to build modular AI pipelines using LangChain Expression Language (LCE
 ## Project File
 chain_architecture.py
 
-## Full Implementation
-
-```from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_groq import ChatGroq
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-prompt = ChatPromptTemplate.from_template(
-    "You are a sarcastic technical support agent. "
-    "The user is asking: {user_query}. "
-    "Answer them, but be slightly annoyed."
-)
-
-api_key = os.getenv("GROQ_API_KEY")
-
-llm = ChatGroq(
-    model="llama-3.1-8b-instant",
-    temperature=0.7,
-    max_tokens=100,
-    api_key=api_key
-)
-
-parser = StrOutputParser()
-
-chain = prompt | llm | parser
-
-user_query = "I spilled coffee on my keyboard. What do I do?"
-
-response = chain.invoke({"user_query": user_query})
-
-print(response)
-```
-
 ## How It Works
 User provides input (user_query)
 Prompt template formats the instruction
@@ -337,82 +301,6 @@ Learn advanced prompt engineering techniques in LangChain to improve response qu
 ## Project File
 
 advanced_prompt_engineering.py
-
-## Full Implementation
-
-```python
-from dotenv import load_dotenv
-from langchain_groq import ChatGroq
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    FewShotChatMessagePromptTemplate
-)
-from langchain_core.output_parsers import StrOutputParser
-
-load_dotenv()
-
-# Initialize the model
-llm = ChatGroq(
-    model="llama-3.1-8b-instant",
-    temperature=0.7,
-    max_tokens=100
-)
-
-print("Technique A: Role-Based Prompting")
-
-# Role-Based Prompting
-messages = [
-    SystemMessage(
-        content="You are a senior Python Architect. You only answer with code snippets. No explanations."
-    ),
-    HumanMessage(content="How do I reverse a list?")
-]
-
-response = llm.invoke(messages)
-print(response.content)
-
-print("\nTechnique B: Few-Shot Prompting")
-
-# Few-Shot Examples
-examples = [
-    {"input": "2+2", "output": "4"},
-    {"input": "2+3", "output": "5"},
-]
-
-# Example Template
-example_prompt = ChatPromptTemplate.from_messages(
-    [
-        ("human", "{input}"),
-        ("ai", "{output}")
-    ]
-)
-
-# Few-Shot Prompt
-few_shot_prompt = FewShotChatMessagePromptTemplate(
-    example_prompt=example_prompt,
-    examples=examples,
-)
-
-# Final Prompt
-final_prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", "You are a math wizard."),
-        few_shot_prompt,
-        ("human", "{input}")
-    ]
-)
-
-# Output Parser
-parser = StrOutputParser()
-
-# Chain
-chain = final_prompt | llm | parser
-
-response = chain.invoke({"input": "What is 10 + 10?"})
-
-print(response)
-```
 
 ## Technique A: Role-Based Prompting
 
@@ -519,6 +407,132 @@ Final Response
 - Created reusable AI workflows
 - Combined prompts, models, and parsers using LCEL
 - Understood how prompt engineering improves output quality
+
+# Assignment 6: Hands-On Lab – The Corporate Translator
+
+## Objective
+
+Build an AI-powered Corporate Translator that converts rude, emotional, or unprofessional text into professional corporate email language while preserving the original meaning. This project combines Prompt Templates, LCEL Chains, Output Parsers, and Prompt Engineering techniques to create a practical business communication tool.
+
+## Project File
+
+Corporate_Translator.py
+
+
+## How It Works
+
+1. The user enters a rude, emotional, or unprofessional statement.
+2. The prompt template inserts the text into a predefined corporate communication prompt.
+3. The Groq LLM rewrites the message using a professional and diplomatic tone.
+4. The StrOutputParser converts the response into clean text.
+5. The LCEL chain executes the complete workflow.
+6. The professional version is displayed to the user.
+7. The loop continues until the user types `exit`.
+
+## Prompt Structure
+
+```text
+You are a Corporate Communication Expert.
+
+Rewrite the following rude text into professional,
+diplomatic email language.
+
+Do not change the underlying meaning.
+Only improve the tone.
+
+RUDE TEXT:
+{text}
+
+PROFESSIONAL EMAIL SNIPPET:
+```
+
+## Data Flow
+
+```text
+User Input
+     ↓
+ChatPromptTemplate
+     ↓
+Groq LLM
+     ↓
+StrOutputParser
+     ↓
+Professional Email Text
+```
+
+## Test Case 1
+
+### Input
+
+```text
+This idea is stupid and you are dumb.
+```
+
+### Output
+
+```text
+Dear [Name],
+
+I wanted to discuss the recent idea presented by the team. While I appreciate the effort and creativity put into it, I have some concerns about its feasibility and potential impact on our goals. Upon further review, I believe there may be some potential drawbacks that need to be considered. I would like to schedule a meeting to discuss these points in more detail and explore alternative solutions.
+
+Best regards,
+[Your Name]
+```
+
+## Test Case 2
+
+### Input
+
+```text
+This project is a mess and nobody knows what they are doing.
+```
+
+### Output
+
+```text
+Subject: Project Review and Improvement Opportunities
+
+Dear Team,
+
+I wanted to take a moment to discuss the current status of our project. While we've made significant progress, I've noticed that there are some areas where our processes and communication could be clarified to ensure we're all aligned and working efficiently. I'd like to schedule a meeting with the team to review our project plan, discuss any challenges we're facing, and explore ways to improve our workflows and communication.
+
+Your input and collaboration in this matter are invaluable, and I appreciate your dedication to delivering a high-quality outcome.
+
+Best regards,
+[Your Name]"
+
+```
+
+## Key Components Used
+
+| Component | Purpose |
+|------------|----------|
+| ChatPromptTemplate | Creates a dynamic prompt with placeholders |
+| ChatGroq | Processes the prompt using the LLM |
+| StrOutputParser | Converts model output into plain text |
+| LCEL Pipe Operator (`|`) | Connects all components into a chain |
+| Function (`make_professional`) | Makes the translator reusable |
+| While Loop | Allows continuous user interaction |
+
+## Key Concepts Learned
+
+- Prompt Engineering
+- Role-Based Prompting
+- Dynamic Prompt Templates
+- LCEL Chain Architecture
+- Output Parsing
+- Function-Based Design
+- Interactive AI Applications
+- Business Communication Automation
+
+## Learning Outcomes
+
+- Built a real-world AI application using LangChain.
+- Created reusable AI workflows using functions.
+- Converted unprofessional language into professional corporate communication.
+- Applied Prompt Templates and Output Parsers together.
+- Used LCEL to connect prompts, models, and parsers.
+- Learned how prompt design directly influences AI-generated responses.
 
 ```
 # Repository Structure
