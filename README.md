@@ -8,7 +8,7 @@ The goal is to build a strong foundation in developing AI-powered applications u
 
 ---
 
-### Completed Assignments
+### Assignments
 
 * ✅ Assignment 1: LangChain Basics
 * ✅ Assignment 2: Development Environment for LangChain
@@ -324,7 +324,8 @@ LCEL chain executes everything in one pipeline
 - Output parsing using StrOutputParser
 - LCEL pipe operator (|) for chaining components
 - End-to-end AI pipeline execution
-```
+
+---
 
 # Assignment 5: Advanced Prompt Engineering
 
