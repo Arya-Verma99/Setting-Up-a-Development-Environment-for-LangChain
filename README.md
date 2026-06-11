@@ -264,7 +264,70 @@ Now, let's say you have a task to put all the toys away in their boxes. If you j
 * Extracted generated responses
 
 ---
+# Assignment 4: Chain Architecture Using LCEL
 
+## Objective
+Learn how to build modular AI pipelines using LangChain Expression Language (LCEL) by combining Prompt Templates, LLMs, and Output Parsers into a single execution chain.
+
+## Project File
+chain_architecture.py
+
+## Full Implementation
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_groq import ChatGroq
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+prompt = ChatPromptTemplate.from_template(
+    "You are a sarcastic technical support agent. "
+    "The user is asking: {user_query}. "
+    "Answer them, but be slightly annoyed."
+)
+
+api_key = os.getenv("GROQ_API_KEY")
+
+llm = ChatGroq(
+    model="llama-3.1-8b-instant",
+    temperature=0.7,
+    max_tokens=100,
+    api_key=api_key
+)
+
+parser = StrOutputParser()
+
+chain = prompt | llm | parser
+
+user_query = "I spilled coffee on my keyboard. What do I do?"
+
+response = chain.invoke({"user_query": user_query})
+
+print(response)
+
+## How It Works
+User provides input (user_query)
+Prompt template formats the instruction
+LLM processes the formatted prompt
+Output parser converts response into clean text
+LCEL chain executes everything in one pipeline
+
+## Model Parameters
+| Parameter   | Description |
+|------------|-------------|
+| model | Specifies which LLM to use |
+| temperature | Controls randomness/creativity |
+| max_tokens | Limits response length |
+
+## Key Concepts Learned
+- Prompt Templates for dynamic inputs
+- Groq LLM integration with LangChain
+- Output parsing using StrOutputParser
+- LCEL pipe operator (|) for chaining components
+- End-to-end AI pipeline execution
+---
 # Repository Structure
 
 ```text
