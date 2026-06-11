@@ -342,21 +342,9 @@ LangChain/
 ├── Assignment_02_Development_Environment/
 ├── Assignment_03_First_AI_Connection/
 │
-├── Assignment_04_LCEL/
+├── Assignment_04_chain_architecture/
 ├── Assignment_05_Prompt_Engineering/
 ├── Assignment_06_Applied_AI/
 ├── Assignment_07_MultiModal_Content/
 └── Assignment_08_Advanced_Content_Generation/
-```
 
----
-
-# Technologies Used
-
-* Python 3.10+
-* LangChain
-* Groq
-* python-dotenv
-* tiktoken
-* Git
-* GitHub
