@@ -271,7 +271,7 @@ chain_architecture.py
 
 ## Full Implementation
 
-from langchain_core.prompts import ChatPromptTemplate
+```from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
@@ -303,6 +303,7 @@ user_query = "I spilled coffee on my keyboard. What do I do?"
 response = chain.invoke({"user_query": user_query})
 
 print(response)
+```
 
 ## How It Works
 User provides input (user_query)
