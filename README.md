@@ -533,8 +533,63 @@ Best regards,
 - Applied Prompt Templates and Output Parsers together.
 - Used LCEL to connect prompts, models, and parsers.
 - Learned how prompt design directly influences AI-generated responses.
+---
+# Assignment 7 : Marketing Content Generator (LangChain + Groq)
+
+## Overview
+This project is a Marketing Content Generator built using LangChain and Groq’s LLaMA 3.1 8B Instant model. It generates platform-specific marketing content from a single product input, demonstrating how LLM chains can be used for automated content creation using prompt engineering and LCEL (LangChain Expression Language).
+
+## Process
+
+1. The user provides a product name as input through the terminal.
+2. A ChatPromptTemplate is used to dynamically inject the product name into a structured prompt.
+3. The prompt instructs the model to generate marketing content for three platforms:
+   - Tweet (short, engaging, within 280 characters)
+   - LinkedIn post (professional tone with bullet points)
+   - Instagram caption (casual, emoji-rich, engaging tone)
+4. The prompt and LLM (ChatGroq with LLaMA 3.1 8B Instant) are connected using LCEL:
+   Prompt → LLM → Output Parser
+5. The model generates a single combined response containing all requested sections.
+6. StrOutputParser is used to return the raw string output without modification.
+7. The final output is printed directly in the terminal.
+
+## Techniques Used
+
+### 1. Prompt Engineering
+A structured prompt is designed to guide the LLM to generate multi-platform marketing content. It defines tone, format expectations, and section separation requirements.
+
+### 2. LangChain Expression Language (LCEL)
+LCEL is used to build a simple but powerful pipeline by chaining components:
+- Prompt Template
+- ChatGroq LLM
+- Output Parser
+
+### 3. LLM Integration (Groq API)
+The ChatGroq wrapper is used to connect to the LLaMA 3.1 8B Instant model, enabling fast inference and high-quality text generation.
+
+### 4. Output Parsing
+StrOutputParser is used to extract the raw response from the model without transformation, keeping full control of formatting through prompt design.
+
+### 5. Multi-Platform Content Generation
+The model is guided to generate distinct content styles for:
+- Social media (Tweet)
+- Professional networking (LinkedIn)
+- Visual engagement platform (Instagram)
+
+## Flow Diagram
+User Input → Prompt Template → Groq LLM → Output Parser → Final Text Output
+
+## Key Learnings
+- LLM behavior is heavily dependent on prompt clarity
+- OutputParser does not enforce structure; it only processes output
+- LCEL simplifies chaining of LLM components
+- Proper instruction design is critical for multi-format generation
+
+## Conclusion
+This project demonstrates how LangChain can be used to build lightweight LLM pipelines for automated marketing content generation across multiple platforms using a single unified prompt and chain structure.
 
 ```
+
 # Repository Structure
 
 ```text
@@ -545,13 +600,12 @@ LangChain/
 ├── hello_world.py
 ├── validate_env.py
 │
-├── Assignment_01_LangChain_Basics/
-├── Assignment_02_Development_Environment/
-├── Assignment_03_First_AI_Connection/
+├── Assignment_01_LangChain_Basics.py/
+├── Assignment_02_Development_Environment.py/
+├── Assignment_03_First_AI_Connection.py/
 │
-├── Assignment_04_chain_architecture/
-├── Assignment_05_Prompt_Engineering/
-├── Assignment_06_Applied_AI/
-├── Assignment_07_MultiModal_Content/
-└── Assignment_08_Advanced_Content_Generation/
+├── Assignment_04_chain_architecture.py/
+├── Assignment_05_advanced_prompt_engineering.py/
+├── Assignment_06_Corporate_Translator.py/
+└── Assignment_07_marketing_content_generator.py/
 
