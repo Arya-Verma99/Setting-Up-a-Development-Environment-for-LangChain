@@ -17,7 +17,6 @@ The goal is to build a strong foundation in developing AI-powered applications u
 * ✅ Assignment 5: Prompt Engineering Mastery – Controlling AI Behavior with Roles, Examples, and Intent
 * ✅ Assignment 6: Applied AI in Action – Building Real-World Language Transformation Tools with LangChain
 * ✅ Assignment 7: Multi-Modal Content Intelligence – Generating Platform-Specific Marketing Copy with LangChain
-* ✅ Assignment 8: Advanced Multi-Modal Content Generation
 
 ---
 
